@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+
+<!-- viewport meta to reset iPhone inital scale -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CCdevs</title>
+
+<!-- css3-mediaqueries.js for IE8 or older -->
+<!--[if lt IE 9]>
+	<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+<![endif]-->
+
+<style type="text/css">
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1.2em;
+	line-height: 150%;
+}
+a {
+	color: #669;
+	texto-decoration: none;
+}
+a:hover {
+	texto-decoration: underline;
+}
+h1 {
+	font: bold 36px/100% Arial, Helvetica, sans-serif;
+}
+
+/************************************************************************************
+ESTRUCTURA
+*************************************************************************************/
+#pagewrap {
+	padding: 5px;
+	width: 960px;
+	margin-top: 10px;
+	margin-right: auto;
+	margin-bottom: 20px;
+	margin-left: auto;
+}
+#header {
+	height: 50px;
+}
+#content {
+	width: 800px;
+	float: none;
+}
+#sidebar {
+	width: 300px;
+	float: right;
+}
+#footer {
+	clear: both;
+}
+
+/************************************************************************************
+MEDIA QUERIES
+*************************************************************************************/
+/* para 980px o menos */
+@media screen and (max-width: 980px) {
+	
+	#pagewrap {
+		width: 94%;
+	}
+	#content {
+		width: 65%;
+	}
+	#sidebar {
+		width: 30%;
+	}
+
+}
+
+/* para 700px o menos */
+@media screen and (max-width: 700px) {
+
+	#content {
+		width: auto;
+		float: none;
+	}
+	#sidebar {
+		width: auto;
+		float: none;
+	}
+
+}
+
+/* para 480px o menos */
+@media screen and (max-width: 480px) {
+
+	#header {
+		height: auto;
+	}
+	h1 {
+		font-size: 24px;
+	}
+	#sidebar {
+		display: none;
+	}
+
+}
+
+/* borde & guideline (puedes ignorarlo) */
+#content {
+	background-color: #ffffff;
+}
+#sidebar {
+	background: #f0efef;
+}
+#header, #content, #sidebar {
+	margin-bottom: 5px;
+}
+#pagewrap, #header, #content, #sidebar, #footer {
+	border: thin none #ccc;
+	right: 0px;
+	left: 0px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.style4 {font-size: 1.4em}
+.style6 {color: #990000}
+.style7 {color: #0000FF}
+.style9 {color: #336600}
+</style>
+</head>
+
+<body>
+
+<div id="pagewrap">
+
+  <div id="header">
+		<h1 align="center" class="style4">MainActivity</h1>
+  </div>
+
+	<div id="content">
+	  <p>import static android.widget.Toast.LENGTH_SHORT;<br>
+	    import static java.lang.System.currentTimeMillis;<br>
+	    import java.text.SimpleDateFormat;<br>
+	    import java.util.Date;<br>
+      import java.util.Locale;</p>
+      <p>import android.annotation.SuppressLint;<br>
+        import android.content.Intent;<br>
+        import android.graphics.Bitmap;<br>
+        import android.net.Uri;<br>
+        import android.os.Bundle;<br>
+        import android.support.v7.app.AppCompatActivity;<br>
+        import android.view.Menu;<br>
+        import android.view.MenuInflater;<br>
+        import android.view.MenuItem;<br>
+        import android.view.WindowManager;<br>
+        import android.webkit.WebSettings;<br>
+        import android.webkit.WebView;<br>
+        import android.webkit.WebViewClient;<br>
+        import android.widget.Toast;</p>
+      <p>public class MainActivity extends AppCompatActivity {</p>
+      <p> private WebView myWebView;</p>
+      <p> @SuppressLint(&quot;SetJavaScriptEnabled&quot;) @Override<br>
+        protected void onCreate(Bundle savedInstanceState) {<br>
+        super.onCreate(savedInstanceState);<br>
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, <br>
+        WindowManager.LayoutParams.FLAG_FULLSCREEN);<br>
+        this.setContentView(R.layout.activity_main);</p>
+      <p> this.myWebView = (WebView) this.findViewById(R.id.webView);</p>
+      <p> myWebView.addJavascriptInterface(new WebAppInterface(this),<br>
+  &quot;Android&quot;);<br>
+  <br>
+        WebSettings webSettings = myWebView.getSettings();<br>
+        webSettings.setJavaScriptEnabled(true);</p>
+      <p> //Provide a WebViewClient for your WebView<br>
+        myWebView.setWebViewClient(new MyWebViewClient());</p>
+      <p> myWebView.loadUrl(&quot;http://www.ccdevs.es&quot;);</p>
+      <p> }</p>
+      <p> @Override<br>
+        public void onBackPressed() {</p>
+      <p> if (this.myWebView.canGoBack())<br>
+        this.myWebView.goBack();<br>
+        else<br>
+        super.onBackPressed();</p>
+      <p> }</p>
+      <p> @Override<br>
+        public boolean onCreateOptionsMenu(Menu menu){<br>
+        MenuInflater inflater = getMenuInflater();<br>
+        inflater.inflate(R.menu.main_menu, menu);<br>
+        return true;<br>
+  <br>
+        }<br>
+  <br>
+        @Override<br>
+        public boolean onOptionsItemSelected(MenuItem item)<br>
+        {<br>
+        switch (item.getItemId())<br>
+        {<br>
+        case R.id.action_code:<br>
+        startActivity(new Intent(this, CodeActivity.class));<br>
+        return true;<br>
+        default:<br>
+        return super.onOptionsItemSelected(item);<br>
+  <br>
+        } <br>
+        }<br>
+  <br>
+        private class MyWebViewClient extends WebViewClient {</p>
+      <p> private long loadTime;</p>
+      <p> @Override<br>
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {</p>
+      <p> if (Uri.parse(url).getHost().equals(&quot;android_asset/ejemplo.html&quot;)) {<br>
+        // This is my web site, so do not override; let my WebView load<br>
+        // the page<br>
+        return false;<br>
+        }</p>
+      <p> Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));<br>
+        startActivity(intent);<br>
+        return true;<br>
+        }</p>
+      <p> @Override<br>
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {<br>
+        super.onPageStarted(view, url, favicon);</p>
+      <p> // Save start time<br>
+        this.loadTime = currentTimeMillis();</p>
+      <p> // Show a toast<br>
+        Toast.makeText(getApplicationContext(),<br>
+  &quot;La página esta cargando...&quot;, LENGTH_SHORT).show();<br>
+        }</p>
+      <p> @Override<br>
+        public void onPageFinished(WebView view, String url) {<br>
+        super.onPageFinished(view, url);</p>
+      <p> // Calculate load time<br>
+        this.loadTime = currentTimeMillis() - this.loadTime;</p>
+      <p> // Convert milliseconds to date format<br>
+        String time = new SimpleDateFormat(&quot;mm:ss:SSS&quot;, Locale.getDefault())<br>
+        .format(new Date(this.loadTime));</p>
+      <p> // Show a toast<br>
+        Toast.makeText(getApplicationContext(),<br>
+  &quot;La página terminó de cargar &quot; + time, LENGTH_SHORT)<br>
+        .show();</p>
+      <p> }<br>
+          <br>
+        }</p>
+      <p>}</p>
+  </div>
+
+	<div id="footer">
+		<table width="400" border="0" align="center">
+          <tr>
+            <td><div align="right">Descargar código: </div></td>
+            <td><a href="https://github.com/ramon58/WebViewUrl"><img src="image/github_logo.png" alt="Git Hub" width="200" height="77" border="0"></a></td>
+          </tr>
+        </table>
+		<h4>&nbsp;</h4>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">WebViewAssets</string>
+    <string name="dimens">Diámetro</string>
+    <string name="cate">Nombre</string>
+    <string name="sat">Satélites</string>
+    <string name="menu_settings">Settings</string>
+    <string name="code">código</string>
+    <string name="url">URL: www.ccdevs.es</string>
+    <string name="adelante">Adelante</string>
+    <string name="info">Información</string>
+    <string name="splash_texto">Uncheck the box to disable the splash screen when the application starts.</string>
+    <string name="text_info">This application has been developed by CCdevs in native Android to version 2.3 and higher, this translated into Spanish, Catalan, and English.</string>
+    
+
+</resources>
